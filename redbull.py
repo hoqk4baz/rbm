@@ -86,11 +86,11 @@ while True:
     kontrol = requests.get("https://wndr.azurewebsites.net/api/v1/dashboard/active-packages", headers=headers3)
     try:
     	kullanilan1 = kontrol.json()["packages"][0]["usedData"]
-      print(str(kullanilan1)+"MB Kullanildi)
     	if kullanilan1 == 1124:
     		paket_aktifle()
     except:
     	giris_token()
+	sonuc2 = giris_token()
     	paket_aktifle()
     	time .sleep(3)
     time.slee(3)
