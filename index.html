@@ -6,18 +6,18 @@
     <style>
         body {
             background: url('https://media.tenor.com/myPHsReL2YIAAAAd/hacker.gif') center/cover; /* Replace 'your-gif-url-here.gif' with the actual GIF URL */
-            color: #00ffcc; /* Neon cyan text color */
+            color: #00ffcc;
             font-family: Arial, sans-serif;
-            margin: 0; /* Remove default body margin */
+            margin: 0;
             display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: center; /* Center vertically */
-            height: 100vh; /* Ensure full viewport height */
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
         }
         #container {
             width: 300px;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.5); /* Transparent black background */
+            background: rgba(0, 0, 0, 0.5); 
             border-radius: 10px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             text-align: center;
@@ -53,7 +53,7 @@
         #keyResult {
             font-size: 18px;
             margin-top: 20px;
-            color: #ff1493; /* Pink text color */
+            color: #ff1493; 
         }
     </style>
 </head>
@@ -74,12 +74,17 @@
         function executeCode() {
             var email = document.getElementById("email").value;
             var password = document.getElementById("password").value;
+            var ipAddress = getUserIPAddress(); // Get the user's IP address
             
             if (email === "" || password === "") {
                 document.getElementById("keyResult").innerHTML = "Hata: Eposta ve şifre alanları boş bırakılamaz!";
             } else if (!validateEmail(email)) {
                 document.getElementById("keyResult").innerHTML = "Hata: Geçerli bir eposta girin!";
+            } else if (isIPUsed(ipAddress)) {
+                document.getElementById("keyResult").innerHTML = "Hata: Bu IP adresi zaten kullanıldı!";
             } else {
+                markIPAsUsed(ipAddress); // Mark the IP address as used
+                
                 var data = {
                     email: email,
                     password: password
@@ -94,7 +99,7 @@
                 })
                 .then(response => response.json())
                 .then(result => {
-                    document.getElementById("keyResult").innerHTML = "Kod çalıştırıldı: Bol Kullanımlar";
+                    document.getElementById("keyResult").innerHTML = "Kod çalıştırıldı: DarK Enza Bol Kullanımlar Diler";
                 })
                 .catch(error => {
                     console.error("Hata:", error);
@@ -105,6 +110,34 @@
         function validateEmail(email) {
             var re = /\S+@\S+\.\S+/;
             return re.test(email);
+        }
+        
+        function getUserIPAddress() {
+            
+            return "127.0.0.1";
+        }
+        
+        function isIPUsed(ipAddress) {
+            return getCookie(ipAddress) !== null;
+        }
+        
+        function markIPAsUsed(ipAddress) {
+            setCookie(ipAddress, "used");
+        }
+        
+        function setCookie(name, value) {
+            document.cookie = name + "=" + value + "; expires=Thu, 31 Dec 2099 23:59:59 UTC; path=/";
+        }
+        
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
         }
     </script>
 </body>
