@@ -1,9 +1,13 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 import json
 import random
 import string
 import requests
 import os
+import threading
+
+class ThreadedHTTPServer(ThreadingHTTPServer):
+    pass
 
 class RequestHandler(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -58,10 +62,10 @@ def get_new_filename(base_filename, extension):
         
     return new_filename
 
-def run_server(server_class=HTTPServer, handler_class=RequestHandler, port=3169):
+def run_server(server_class=ThreadedHTTPServer, handler_class=RequestHandler, port=3169):
     server_address = ("", port)
     httpd = server_class(server_address, handler_class)
-    print(f"Sunucu {port} portunda Calisiyor...")
+    print(f"Sunucu {port} portunda Çalışıyor...")
     httpd.serve_forever()
 
 if __name__ == "__main__":
