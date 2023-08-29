@@ -1,10 +1,10 @@
-from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
+from http.server import BaseHTTPRequestHandler
+from socketserver import ThreadingHTTPServer
 import json
 import random
 import string
 import requests
 import os
-import threading
 
 class ThreadedHTTPServer(ThreadingHTTPServer):
     pass
