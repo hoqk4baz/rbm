@@ -90,7 +90,7 @@ while True:
     		paket_aktifle()
     except:
     	giris_token()
-	sonuc2 = giris_token()
+    	sonuc2 = giris_token()
     	paket_aktifle()
     	time .sleep(3)
-    time.slee(3)
+    time.sleep(3)
